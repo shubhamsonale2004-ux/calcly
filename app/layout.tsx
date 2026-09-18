@@ -1,11 +1,18 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { ServiceWorkerRegister } from '@/components/service-worker-register'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Calculator',
+  description: 'A simple, fast calculator you can install and use offline.',
   generator: 'v0.app',
+  applicationName: 'Calculator',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Calculator',
+  },
   icons: {
     icon: [
       {
@@ -31,6 +38,10 @@ export const viewport: Viewport = {
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({
@@ -42,6 +53,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         {children}
+        <ServiceWorkerRegister />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
